@@ -267,8 +267,8 @@ typedef float CLFlt;        /* single-precision float used for cond likes (CLFlt
 
 #define NST_MIXED              -1  /* anything other than 1, 2, or 6 */
 
-#define MISSING                1073741822  // NBits(x)=29
-#define GAP                    1073741823  // NBits(x)=30
+#define MISSING                1073741823  //  111111111111111111111111111111, 30 bits
+#define GAP                    1073741824  // 1000000000000000000000000000000
 
 #define UNORD                   0
 #define ORD                     1
@@ -360,7 +360,7 @@ typedef float CLFlt;        /* single-precision float used for cond likes (CLFlt
 /* SK:
  * Used when doing reversible jump over stationary and directional
  * model: root frequencies are not used when in stationary model. */
-#define NOT_APPLICABLE -9999.0
+#define NOT_APPLICABLE          -9999.0
 
 #define CMD_STRING_LENGTH       100000
 
@@ -1390,6 +1390,10 @@ typedef struct modelinfo
     int         tiProbLength;               /* length of ti prob array                      */
     MrBFlt      lnLike[MAX_CHAINS];         /* log like for chain                           */
     CLFlt       *ancStateCondLikes;         /* ancestral state cond like array              */
+
+    /* Variables for continuous traits */
+    CLFlt       **ancStates;                /* space for the (ancestral) trait states       */
+    CLFlt       **bmVars;                   /* space for the (transformed) branch lengths   */
 
     /* Likelihood function pointers */
     LikeDownFxn         CondLikeDown;       /* function for calculating partials            */
